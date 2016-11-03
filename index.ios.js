@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
-    Text,
+    Text,ListView,
     View, Image, TouchableOpacity,TextInput,
 } from 'react-native';
 import Button from './src/component/Button';
@@ -21,6 +21,13 @@ class AwesomeProject extends Component {
         super(props);
         //初始状态
         this.state = {status: 1, text: 2};
+        // 初始化模拟数据
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.state = {
+            dataSource: ds.cloneWithRows([
+                'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin', 'Julie', 'Devin'
+            ])
+        };
 
     }
 
@@ -65,10 +72,10 @@ class AwesomeProject extends Component {
                     <Button text="取消1" ref="button" onPress={this.fetchData}></Button>
                     <Button text="取消1" onPress={()=>this.setState({text: 22})}></Button>
                     <Button text="取消3" onPress={()=>Toast.show('ddd')}></Button>
-                    <Text style={styles.red}>just red</Text>
-                    <Text style={styles.bigblue}>just bigblue</Text>
-                    <Text style={[styles.bigblue, styles.red]}>bigblue, then red</Text>
-                    <Text style={[styles.red, styles.bigblue]}>red, then bigblue</Text>
+                    {/*<Text style={styles.red}>just red</Text>*/}
+                    {/*<Text style={styles.bigblue}>just bigblue</Text>*/}
+                    {/*<Text style={[styles.bigblue, styles.red]}>bigblue, then red</Text>*/}
+                    {/*<Text style={[styles.red, styles.bigblue]}>red, then bigblue</Text>*/}
                 </View>
                 <View style={{height: 150}}>
 
@@ -87,11 +94,18 @@ class AwesomeProject extends Component {
                         onChangeText={(text) => this.setState({text})}
                     />
                     <Text style={{padding: 10, fontSize: 42}}>
-                        {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
+                        {/*{this.state.text.split(' ').map((word) => word && '🍕').join(' ')}*/}
                     </Text>
+                </View>
+                <View style={{paddingTop: 22}}>
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={(rowData) => <Text>{rowData}</Text>}
+                    />
                 </View>
 
             </View>
+
 
 
 
